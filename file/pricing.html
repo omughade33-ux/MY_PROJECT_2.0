@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — CargoConnect</title>
+<style>
+body { font-family:Arial; background:#f4f4f4; margin:0; }
+header { background:#0F1B2D; color:white; text-align:center; padding:20px; }
+header a { color:#aaa; text-decoration:none; font-size:.85rem; }
+.pricing { display:flex; justify-content:center; gap:24px; padding:50px 20px; flex-wrap:wrap; }
+.card { background:white; width:260px; padding:32px 25px; border-radius:14px; text-align:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.08); border:2px solid transparent; }
+.card.popular { border-color:#E8501A; }
+.badge { background:#E8501A; color:white; font-size:.72rem; font-weight:700; padding:3px 12px;
+  border-radius:20px; display:inline-block; margin-bottom:10px; }
+.card h2 { color:#0F1B2D; margin-bottom:.5rem; }
+.price { font-size:2.4rem; color:#E8501A; font-weight:800; margin:.5rem 0; }
+.price sup { font-size:1rem; vertical-align:top; margin-top:.6rem; display:inline-block; }
+.period { color:#888; font-size:.85rem; margin-bottom:1.25rem; }
+.features { list-style:none; padding:0; margin:0 0 1.5rem; text-align:left; }
+.features li { padding:6px 0; font-size:.9rem; color:#444; border-bottom:1px solid #f0f0f0; }
+.features li::before { content:'✅ '; }
+.btn { display:block; padding:12px; background:#E8501A; color:white; border-radius:8px;
+  text-decoration:none; font-weight:700; font-size:.95rem; }
+.btn:hover { background:#c94315; }
+.btn-outline { background:transparent; border:2px solid #E8501A; color:#E8501A; }
+.btn-outline:hover { background:#E8501A; color:white; }
+</style>
+</head>
+<body>
+<header>
+  <a href="demo.html">← Back to Home</a>
+  <h1>Pricing Plans</h1>
+</header>
+<div class="pricing">
+
+  <div class="card">
+    <h2>Basic</h2>
+    <div class="price"><sup>₹</sup>499</div>
+    <div class="period">per month</div>
+    <ul class="features">
+      <li>Up to 10 loads/month</li>
+      <li>GST verification</li>
+      <li>Basic support</li>
+      <li>Transporter bidding</li>
+    </ul>
+    <a href="demo.html" class="btn btn-outline">Get Started</a>
+  </div>
+
+  <div class="card popular">
+    <div class="badge">⭐ Most Popular</div>
+    <h2>Pro</h2>
+    <div class="price"><sup>₹</sup>1499</div>
+    <div class="period">6 months access</div>
+    <ul class="features">
+      <li>Unlimited loads</li>
+      <li>Priority listing</li>
+      <li>24/7 support</li>
+      <li>Dashboard analytics</li>
+      <li>GST & OTP verification</li>
+    </ul>
+    <a href="demo.html" class="btn">Get Pro →</a>
+  </div>
+
+</div>
+</body>
+</html>

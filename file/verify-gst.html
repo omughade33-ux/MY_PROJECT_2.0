@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify GST — CargoConnect</title>
+<style>
+body { font-family:Arial; background:#f8f8f8; margin:0; }
+header { background:#E8501A; color:white; text-align:center; padding:20px; }
+header a { color:white; text-decoration:none; font-size:.85rem; margin-right:1rem; }
+.container { padding:50px; text-align:center; }
+input { padding:12px; width:300px; border:2px solid #ddd; border-radius:8px; font-size:1rem; outline:none; }
+input:focus { border-color:#E8501A; }
+button { padding:12px 28px; background:#E8501A; color:white; border:none; border-radius:8px;
+  font-size:1rem; font-weight:600; cursor:pointer; margin-left:8px; }
+button:hover { background:#c94315; }
+#result { margin-top:2rem; padding:1.5rem; border-radius:10px; display:none; max-width:420px; margin-left:auto; margin-right:auto; }
+.valid   { background:#DCFCE7; color:#15803D; border:1.5px solid #86EFAC; }
+.invalid { background:#FEE2E2; color:#DC2626; border:1.5px solid #FCA5A5; }
+.info-row { display:flex; justify-content:space-between; margin-top:.5rem; font-size:.9rem; }
+.info-row span:first-child { font-weight:700; }
+</style>
+</head>
+<body>
+<header>
+  <a href="demo.html">← Home</a>
+  <h1>GST Verification</h1>
+</header>
+<div class="container">
+  <h2 style="margin-bottom:1rem">Verify a GST Number</h2>
+  <p style="color:#666;margin-bottom:1.5rem">Check if a GST number is valid and registered on CargoConnect</p>
+  <input type="text" id="gst-input" placeholder="Enter GST Number (e.g. 27AABC1234F1Z5)" maxlength="15"/>
+  <button onclick="verifyGST()">Verify</button>
+  <div id="result"></div>
+</div>
+
+<script>
+const API = 'http://localhost:5000/api';
+
+async function verifyGST() {
+  const gst = document.getElementById('gst-input').value.trim().toUpperCase();
+  const resultEl = document.getElementById('result');
+  if (!gst) { alert('Please enter a GST number'); return; }
+
+  resultEl.style.display = 'block';
+  resultEl.className = '';
+  resultEl.innerHTML = '⏳ Verifying…';
+
+  try {
+    const res = await fetch(`${API}/verify-gst`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ gst_number: gst })
+    });
+    const data = await res.json();
+
+    if (!data.valid) {
+      resultEl.className = 'invalid';
+      resultEl.innerHTML = `<strong>❌ Invalid GST Format</strong><p style="margin-top:.5rem">${data.message}</p>`;
+      return;
+    }
+
+    if (data.registered) {
+      resultEl.className = 'valid';
+      resultEl.innerHTML = `
+        <strong>✅ Valid & Registered on CargoConnect</strong>
+        <div class="info-row"><span>GST Number</span><span>${gst}</span></div>
+        <div class="info-row"><span>Business Name</span><span>${data.details.name}</span></div>
+        <div class="info-row"><span>Type</span><span>${data.details.role === 'company' ? '🏭 Company' : '🚛 Transporter'}</span></div>`;
+    } else {
+      resultEl.className = 'valid';
+      resultEl.style.background = '#FEF9C3';
+      resultEl.style.color = '#92400E';
+      resultEl.style.border = '1.5px solid #FDE68A';
+      resultEl.innerHTML = `<strong>⚠️ Valid Format — Not yet registered</strong><p style="margin-top:.5rem">This GST format is correct but not in our database.</p>`;
+    }
+  } catch {
+    resultEl.className = 'invalid';
+    resultEl.innerHTML = '❌ Could not connect to server. Is Flask running?';
+  }
+}
+
+document.getElementById('gst-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') verifyGST();
+});
+</script>
+</body>
+</html>

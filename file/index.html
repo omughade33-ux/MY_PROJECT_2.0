@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CargoConnect — India's Freight Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E8501A;
+  --orange-light: #F97316;
+  --orange-pale: #FFF3EE;
+  --navy: #0F1B2D;
+  --navy2: #1A2E46;
+  --slate: #3A4D63;
+  --muted: #6B7A8D;
+  --border: #E2E8F0;
+  --white: #FFFFFF;
+  --success: #16A34A;
+  --radius: 12px;
+  --radius-lg: 18px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F8F9FB;
+  color: var(--navy);
+}
+
+h1, h2, h3, .logo-text { font-family: 'Syne', sans-serif; }
+
+/* Navbar */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--orange);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.logo-text span { color: var(--orange); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--slate);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.nav-links a:hover { color: var(--orange); }
+
+.nav-btns {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--slate);
+}
+
+.btn-outline:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: #c94315;
+  transform: translateY(-1px);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--orange-pale);
+  color: var(--orange);
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%);
+  padding: 80px 2rem 60px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.hero h1 span { color: var(--orange-light); }
+
+.hero p {
+  font-size: 1.1rem;
+  color: #94A3B8;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+
+/* Stats */
+.stats-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1.5rem 3rem;
+  border-right: 1px solid var(--border);
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--orange);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Main Container */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Tabs */
+.view-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.view-tab {
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.view-tab.active {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+
+/* Loads Grid */
+.loads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.25rem;
+}
+
+.load-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.load-card:hover {
+  border-color: var(--orange);
+  box-shadow: 0 4px 20px rgba(232, 80, 26, 0.1);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.company-info h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.gst-badge {
+  font-size: 0.7rem;
+  color: var(--success);
+  background: #DCFCE7;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.truck-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--orange-pale);
+  color: var(--orange);
+}
+
+.route-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0.75rem 0;
+}
+
+.route-city {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.route-arrow {
+  color: var(--orange);
+  font-size: 1.1rem;
+}
+
+.route-line {
+  flex: 1;
+  border-top: 2px dashed var(--border);
+}
+
+.card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.meta-item label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.meta-item span {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.price {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--orange);
+}
+
+.btn-bid {
+  padding: 8px 18px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-bid:hover { background: #c94315; }
+
+.status {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.status-open { background: #DCFCE7; color: #15803D; }
+.status-booked { background: #FEF3C7; color: #92400E; }
+
+/* Form */
+.post-form {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--slate);
+  text-transform: uppercase;
+}
+
+.form-group input, .form-group select {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--orange);
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 27, 45, 0.6);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  width: 450px;
+  max-width: 95vw;
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.modal-field {
+  margin-bottom: 1rem;
+}
+
+.modal-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--slate);
+}
+
+.modal-field input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.role-selector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.role-btn.selected {
+  border-color: var(--orange);
+  background: var(--orange-pale);
+  color: var(--orange);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 999;
+  display: none;
+}
+
+.toast.show { display: block; }
+.toast.success { background: var(--success); }
+.toast.error { background: #DC2626; }
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+}
+
+/* Footer */
+footer {
+  background: var(--navy);
+  color: #94A3B8;
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.85rem;
+  margin-top: 2rem;
+}
+
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-icon">🚛</div>
+    <div class="logo-text">Cargo<span>Connect</span></div>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('browse')">Browse Loads</a>
+    <a onclick="showPage('post')" id="postLoadNav" class="hidden">Post a Load</a>
+    <a onclick="showPage('dashboard')" id="dashboardNav" class="hidden">Dashboard</a>
+  </div>
+  <div class="nav-btns" id="authButtons">
+    <button class="btn btn-outline" onclick="openModal('login')">Login</button>
+    <button class="btn btn-primary" onclick="openModal('register')">Register</button>
+  </div>
+  <div class="user-info hidden" id="userInfo">
+    <span class="user-name" id="userName"></span>
+    <span class="role-badge" id="userRole"></span>
+    <button class="btn btn-outline" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="hero" id="homePage">
+  <h1>Connect Loads with<br/><span>Trusted Transporters</span></h1>
+  <p>Post loads, get competitive bids, and move freight across India — GST verified, OTP secured.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <button class="btn btn-primary" onclick="openModal('register')">📦 I Have a Load</button>
+    <button class="btn btn-outline" onclick="openModal('register')">🚛 I'm a Transporter</button>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">12,400+</div><div class="stat-label">Loads Moved</div></div>
+  <div class="stat-item"><div class="stat-num">3,200+</div><div class="stat-label">Verified Transporters</div></div>
+  <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">On-Time Delivery</div></div>
+  <div class="stat-item"><div class="stat-num">28 States</div><div class="stat-label">Pan India Coverage</div></div>
+</div>
+
+<main>
+  <div class="view-tabs" id="tabs">
+    <button class="view-tab active" onclick="switchTab('browse')">🔍 Browse Loads</button>
+    <button class="view-tab hidden" id="postTabBtn" onclick="switchTab('post')">📦 Post a Load</button>
+    <button class="view-tab hidden" id="dashboardTabBtn" onclick="switchTab('dashboard')">📊 My Dashboard</button>
+  </div>
+
+  <div id="browsePage">
+    <div class="loads-grid" id="loadsGrid">
+      <div class="empty-state">Loading loads...</div>
+    </div>
+  </div>
+
+  <div id="postPage" class="hidden">
+    <div class="post-form">
+      <h2 style="margin-bottom: 1.5rem;">📦 Post a New Load</h2>
+      <div class="form-grid">
+        <div class="form-group"><label>Goods Name *</label><input type="text" id="goodsName" placeholder="e.g. Steel Rods"></div>
+        <div class="form-group"><label>Weight *</label><input type="text" id="weight" placeholder="e.g. 22 Tons"></div>
+        <div class="form-group"><label>Pickup Location *</label><input type="text" id="pickupLocation" placeholder="City"></div>
+        <div class="form-group"><label>Delivery Location *</label><input type="text" id="deliveryLocation" placeholder="City"></div>
+        <div class="form-group">
+          <label>Truck Type *</label>
+          <select id="truckType">
+            <option value="">Select</option>
+            <option>10-Tyre</option><option>12-Tyre</option><option>14-Tyre</option>
+            <option>Container</option><option>Open Body</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Pickup Date *</label><input type="date" id="pickupDate"></div>
+        <div class="form-group"><label>Price (₹)</label><input type="number" id="price" placeholder="Optional"></div>
+      </div>
+      <div style="margin-top: 1.5rem;">
+        <button class="btn btn-primary" onclick="postLoad()">Post Load</button>
+        <button class="btn btn-outline" onclick="switchTab('browse')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboardPage" class="hidden">
+    <h2 style="margin-bottom: 0.5rem;">My Dashboard</h2>
+    <p style="color: var(--muted); margin-bottom: 1.5rem;" id="dashboardSubtitle">Your recent activity</p>
+    <div class="loads-grid" id="dashboardGrid">
+      <div class="empty-state">Loading...</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <strong>CargoConnect</strong> — India's Trusted Freight Marketplace<br>
+  GST Verified · Secure Bidding · 24/7 Support
+</footer>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2 id="modalTitle">Login</h2>
+    
+    <div id="loginForm">
+      <div class="modal-field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="loginPassword" placeholder="Your password"></div>
+      <button class="btn btn-primary" style="width:100%" onclick="login()">Login</button>
+      <p style="text-align: center; margin-top: 1rem;">
+        Don't have an account? <a onclick="showRegisterForm()" style="color: var(--orange); cursor: pointer;">Register</a>
+      </p>
+    </div>
+
+    <div id="registerForm" class="hidden">
+      <div class="role-selector">
+        <button class="role-btn" onclick="selectRole('company')">🏭 Company</button>
+        <button class="role-btn" onclick="selectRole('transporter')">🚛 Transporter</button>
+      </div>
+      <div class="modal-field"><label>Full Name</label><input type="text" id="regName" placeholder="Your name"></div>
+      <div class="modal-field"><label>Email</label><input type="email" id="regEmail" placeholder="you@email.com"></div>
+      <div class="modal-field"><label>Phone</label><input type="tel" id="regPhone" placeholder="10-digit mobile"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="regPassword" placeholder="Min 6 chars"></div>
+      <div class="modal-field hidden" id="gstField"><label>GST Number</label><input type="text" id="regGst" placeholder="27AABCU1234F1Z5"></div>
+      <button class="btn btn-primary" style="width:100%" onclick="register()">Create Account</button>
+      <p style="text-align: center; margin-top: 1rem;">
+        Already have an account? <a onclick="showLoginForm()" style="color: var(--orange); cursor: pointer;">Login</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = 'http://localhost:5000/api';
+let currentUser = null;
+let selectedRole = null;
+
+// ========== UTILITIES ==========
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = `toast show ${type}`;
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function updateUI() {
+  if (currentUser) {
+    document.getElementById('authButtons').classList.add('hidden');
+    document.getElementById('userInfo').classList.remove('hidden');
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('userRole').textContent = currentUser.role;
+    
+    // Show transporter/company specific nav
+    if (currentUser.role === 'company') {
+      document.getElementById('postLoadNav').classList.remove('hidden');
+      document.getElementById('postTabBtn').classList.remove('hidden');
+    }
+    document.getElementById('dashboardNav').classList.remove('hidden');
+    document.getElementById('dashboardTabBtn').classList.remove('hidden');
+  } else {
+    document.getElementById('authButtons').classList.remove('hidden');
+    document.getElementById('userInfo').classList.add('hidden');
+    document.getElementById('postLoadNav').classList.add('hidden');
+    document.getElementById('dashboardNav').classList.add('hidden');
+    document.getElementById('postTabBtn').classList.add('hidden');
+    document.getElementById('dashboardTabBtn').classList.add('hidden');
+  }
+}
+
+function showPage(page) {
+  document.getElementById('homePage').style.display = page === 'home' ? 'block' : 'none';
+  document.getElementById('tabs').style.display = page === 'home' ? 'none' : 'flex';
+  
+  if (page !== 'home') {
+    if (page === 'browse') switchTab('browse');
+    else if (page === 'post') switchTab('post');
+    else if (page === 'dashboard') switchTab('dashboard');
+  }
+}
+
+function switchTab(tab) {
+  document.getElementById('browsePage').classList.add('hidden');
+  document.getElementById('postPage').classList.add('hidden');
+  document.getElementById('dashboardPage').classList.add('hidden');
+  
+  document.getElementById(`${tab}Page`).classList.remove('hidden');
+  
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  event?.target?.classList.add('active');
+  
+  if (tab === 'browse') loadLoads();
+  if (tab === 'dashboard') loadDashboard();
+}
+
+function openModal() {
+  document.getElementById('authModal').classList.add('open');
+  showLoginForm();
+}
+
+function closeModal() {
+  document.getElementById('authModal').classList.remove('open');
+}
+
+function showLoginForm() {
+  document.getElementById('loginForm').classList.remove('hidden');
+  document.getElementById('registerForm').classList.add('hidden');
+  document.getElementById('modalTitle').textContent = 'Login';
+}
+
+function showRegisterForm() {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('registerForm').classList.remove('hidden');
+  document.getElementById('modalTitle').textContent = 'Register';
+}
+
+function selectRole(role) {
+  selectedRole = role;
+  document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('selected'));
+  event.target.classList.add('selected');
+  
+  const gstField = document.getElementById('gstField');
+  if (role === 'company') gstField.classList.remove('hidden');
+  else gstField.classList.add('hidden');
+}
+
+// ========== AUTH ==========
+async function login() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  
+  if (!email || !password) {
+    showToast('Please enter email and password', 'error');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${API}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.error || 'Login failed', 'error');
+      return;
+    }
+    
+    currentUser = data.user;
+    updateUI();
+    closeModal();
+    showToast(`Welcome back, ${currentUser.name}!`, 'success');
+    showPage('browse');
+    loadLoads();
+  } catch (err) {
+    showToast('Server error. Is Flask running?', 'error');
+  }
+}
+
+async function register() {
+  if (!selectedRole) {
+    showToast('Please select Company or Transporter', 'error');
+    return;
+  }
+  
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const gst = document.getElementById('regGst').value.trim();
+  
+  if (!name || !email || !phone || !password) {
+    showToast('Please fill all fields', 'error');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showToast('Password must be at least 6 characters', 'error');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${API}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        name, email, phone, password,
+        role: selectedRole,
+        gst: selectedRole === 'company' ? gst : null
+      })
+    });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.error || 'Registration failed', 'error');
+      return;
+    }
+    
+    currentUser = data.user;
+    updateUI();
+    closeModal();
+    showToast('Account created successfully!', 'success');
+    showPage('browse');
+    loadLoads();
+  } catch (err) {
+    showToast('Server error', 'error');
+  }
+}
+
+async function logout() {
+  await fetch(`${API}/logout`, { method: 'POST', credentials: 'include' });
+  currentUser = null;
+  updateUI();
+  showToast('Logged out successfully', 'success');
+  showPage('home');
+}
+
+async function checkSession() {
+  try {
+    const res = await fetch(`${API}/me`, { credentials: 'include' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        currentUser = data.user;
+        updateUI();
+      }
+    }
+  } catch (err) {
+    console.log('Not logged in');
+  }
+}
+
+// ========== LOADS ==========
+async function loadLoads() {
+  const grid = document.getElementById('loadsGrid');
+  grid.innerHTML = '<div class="empty-state">Loading loads...</div>';
+  
+  try {
+    const res = await fetch(`${API}/loads`, { credentials: 'include' });
+    const loads = await res.json();
+    
+    if (!loads.length) {
+      grid.innerHTML = '<div class="empty-state">No loads available</div>';
+      return;
+    }
+    
+    grid.innerHTML = loads.map(load => `
+      <div class="load-card">
+        <div class="card-header">
+          <div class="company-info">
+            <h4>${load.company_name || 'Company'}</h4>
+            <div class="gst-badge">GST: ${load.gst_number || 'Verified'} ✅</div>
+          </div>
+          <div class="truck-badge">🚛 ${load.truck_type}</div>
+        </div>
+        <div class="route-row">
+          <span class="route-city">📍 ${load.pickup_location}</span>
+          <div class="route-line"></div>
+          <span class="route-arrow">→</span>
+          <div class="route-line"></div>
+          <span class="route-city">${load.delivery_location} 📍</span>
+        </div>
+        <div class="card-meta">
+          <div class="meta-item"><label>Goods</label><span>${load.goods_name}</span></div>
+          <div class="meta-item"><label>Weight</label><span>${load.weight}</span></div>
+          <div class="meta-item"><label>Pickup Date</label><span>${load.pickup_date}</span></div>
+          <div class="meta-item"><label>Bids</label><span>${load.bids_count || 0}</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price">${load.price ? `₹${Number(load.price).toLocaleString('en-IN')}` : 'Negotiable'}</div>
+          ${load.status === 'open' 
+            ? `<button class="btn-bid" onclick="placeBid(${load.id})">Bid Now</button>`
+            : `<span class="status status-booked">● Booked</span>`
+          }
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    grid.innerHTML = '<div class="empty-state">❌ Cannot connect to server. Make sure Flask is running on port 5000</div>';
+  }
+}
+
+async function placeBid(loadId) {
+  if (!currentUser) {
+    showToast('Please login first', 'error');
+    openModal();
+    return;
+  }
+  
+  if (currentUser.role === 'company') {
+    showToast('Companies cannot bid on loads', 'error');
+    return;
+  }
+  
+  const amount = prompt('Enter your bid amount (₹):');
+  if (!amount) return;
+  if (isNaN(amount) || Number(amount) <= 0) {
+    showToast('Enter a valid amount', 'error');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${API}/loads/${loadId}/bids`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ bid_amount: Number(amount) })
+    });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.error || 'Bid failed', 'error');
+      return;
+    }
+    
+    showToast('✅ Bid placed successfully!', 'success');
+    loadLoads();
+  } catch (err) {
+    showToast('Server error', 'error');
+  }
+}
+
+async function postLoad() {
+  if (!currentUser || currentUser.role !== 'company') {
+    showToast('Only companies can post loads', 'error');
+    return;
+  }
+  
+  const goodsName = document.getElementById('goodsName').value.trim();
+  const weight = document.getElementById('weight').value.trim();
+  const pickupLocation = document.getElementById('pickupLocation').value.trim();
+  const deliveryLocation = document.getElementById('deliveryLocation').value.trim();
+  const truckType = document.getElementById('truckType').value;
+  const pickupDate = document.getElementById('pickupDate').value;
+  const price = document.getElementById('price').value;
+  
+  if (!goodsName || !weight || !pickupLocation || !deliveryLocation || !truckType || !pickupDate) {
+    showToast('Please fill all required fields', 'error');
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${API}/loads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        goods_name: goodsName,
+        weight: weight,
+        pickup_location: pickupLocation,
+        delivery_location: deliveryLocation,
+        truck_type: truckType,
+        pickup_date: pickupDate,
+        price: price || null
+      })
+    });
+    const data = await res.json();
+    
+    if (!res.ok) {
+      showToast(data.error || 'Failed to post load', 'error');
+      return;
+    }
+    
+    showToast('Load posted successfully!', 'success');
+    
+    // Clear form
+    document.getElementById('goodsName').value = '';
+    document.getElementById('weight').value = '';
+    document.getElementById('pickupLocation').value = '';
+    document.getElementById('deliveryLocation').value = '';
+    document.getElementById('truckType').value = '';
+    document.getElementById('pickupDate').value = '';
+    document.getElementById('price').value = '';
+    
+    switchTab('browse');
+    loadLoads();
+  } catch (err) {
+    showToast('Server error', 'error');
+  }
+}
+
+// ========== DASHBOARD ==========
+async function loadDashboard() {
+  if (!currentUser) {
+    document.getElementById('dashboardGrid').innerHTML = '<div class="empty-state">Please login to view dashboard</div>';
+    return;
+  }
+  
+  const grid = document.getElementById('dashboardGrid');
+  grid.innerHTML = '<div class="empty-state">Loading...</div>';
+  
+  try {
+    const res = await fetch(`${API}/dashboard`, { credentials: 'include' });
+    const data = await res.json();
+    
+    if (data.role === 'company') {
+      document.getElementById('dashboardSubtitle').textContent = 'Your posted loads';
+      if (!data.loads || !data.loads.length) {
+        grid.innerHTML = '<div class="empty-state">No loads posted yet. Click "Post a Load" to get started!</div>';
+        return;
+      }
+      grid.innerHTML = data.loads.map(load => `
+        <div class="load-card">
+          <div class="card-header">
+            <div><h4>${load.goods_name}</h4></div>
+            <span class="status ${load.status === 'open' ? 'status-open' : 'status-booked'}">
+              ${load.status === 'open' ? '● Open' : '● Booked'}
+            </span>
+          </div>
+          <div class="route-row">
+            <span>📍 ${load.pickup_location} → ${load.delivery_location}</span>
+          </div>
+          <div class="card-meta">
+            <div><label>Weight</label><span>${load.weight}</span></div>
+            <div><label>Truck</label><span>${load.truck_type}</span></div>
+            <div><label>Pickup</label><span>${load.pickup_date}</span></div>
+            <div><label>Bids</label><span>${load.bids_count || 0}</span></div>
+          </div>
+          <div class="card-footer">
+            <div class="price">${load.price ? `₹${Number(load.price).toLocaleString('en-IN')}` : 'Negotiable'}</div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      document.getElementById('dashboardSubtitle').textContent = 'Your bids';
+      if (!data.bids || !data.bids.length) {
+        grid.innerHTML = '<div class="empty-state">No bids placed yet. Browse loads and place your first bid!</div>';
+        return;
+      }
+      grid.innerHTML = data.bids.map(bid => `
+        <div class="load-card">
+          <div class="card-header">
+            <div><h4>${bid.goods_name}</h4></div>
+            <span class="status ${bid.status === 'accepted' ? 'status-open' : 'status-booked'}">
+              ${bid.status === 'accepted' ? '● Accepted' : '● Pending'}
+            </span>
+          </div>
+          <div class="route-row">
+            <span>📍 ${bid.pickup_location} → ${bid.delivery_location}</span>
+          </div>
+          <div class="card-meta">
+            <div><label>Weight</label><span>${bid.weight}</span></div>
+            <div><label>Your Bid</label><span class="price">₹${Number(bid.bid_amount).toLocaleString('en-IN')}</span></div>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    grid.innerHTML = '<div class="empty-state">Error loading dashboard</div>';
+  }
+}
+
+// ========== INIT ==========
+document.getElementById('authModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('authModal')) closeModal();
+});
+
+checkSession();
+loadLoads();
+</script>
+</body>
+</html>
