@@ -285,18 +285,10 @@ function switchTab(tab) {
     
     document.getElementById(`${tab}Page`).classList.remove('hidden');
     
-    // Update active tab styling
-    document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
-    if (tab === 'browse') {
-        document.querySelector('.view-tab').classList.add('active');
-        loadLoads();
-    } else if (tab === 'post') {
-        document.getElementById('postTab').classList.add('active');
-    } else if (tab === 'dashboard') {
-        document.getElementById('dashboardTab').classList.add('active');
-        loadDashboard();
-    }
+    if (tab === 'browse') loadLoads();
+    if (tab === 'dashboard') loadDashboard();
 }
+
 function openModal(tab = 'login') {
     document.getElementById('modal').classList.add('open');
     if (tab === 'register') {
