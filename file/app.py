@@ -85,6 +85,7 @@ def register():
             return jsonify({'error': 'Invalid role'}), 400
 
         conn = get_db()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
 
@@ -129,6 +130,7 @@ def login():
             return jsonify({'error': 'Email and password required'}), 400
 
         conn = get_db()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
 
@@ -162,6 +164,7 @@ def logout():
 @login_required
 def me():
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -177,6 +180,7 @@ def me():
 @app.route('/api/loads', methods=['GET'])
 def get_loads():
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify([]), 500
 
@@ -210,6 +214,7 @@ def post_load():
             return jsonify({'error': f'{field} is required'}), 400
 
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -234,6 +239,7 @@ def post_load():
 @app.route('/api/loads/<int:load_id>', methods=['GET'])
 def get_load(load_id):
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -270,6 +276,7 @@ def place_bid(load_id):
         return jsonify({'error': 'Valid bid amount is required'}), 400
 
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -300,6 +307,7 @@ def place_bid(load_id):
 @app.route('/api/loads/<int:load_id>/bids', methods=['GET'])
 def get_bids_for_load(load_id):
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify([]), 500
 
@@ -324,6 +332,7 @@ def get_bids_for_load(load_id):
 @login_required
 def accept_bid(bid_id):
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -357,6 +366,7 @@ def accept_bid(bid_id):
 @login_required
 def dashboard():
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
 
@@ -411,6 +421,7 @@ def verify_gst():
         return jsonify({'valid': False, 'message': 'Invalid GST number format'}), 400
 
     conn = get_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'valid': False, 'message': 'Database error'}), 500
 
