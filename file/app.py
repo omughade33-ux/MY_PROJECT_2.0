@@ -45,7 +45,7 @@ def get_db():
     except Exception as err:
         print(err)
         print(f"Database error: {err}")
-        return None
+        return jsonify({'error': str(err)}), 500
     
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
