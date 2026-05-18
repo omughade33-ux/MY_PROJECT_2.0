@@ -33,10 +33,10 @@ db_config = {
 def get_db():
     try:
         conn = psycopg2.connect(**db_config)
-        print("✅ Database connected successfully!")
+        print("Database connected successfully!")
         return conn
     except Exception as err:
-        print(f"❌ Database error: {err}")
+        print(f"Database error: {err}")
         return None
 
 def hash_password(password):
@@ -85,10 +85,8 @@ def register():
             return jsonify({'error': 'Invalid role'}), 400
 
         conn = get_db()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
-
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
@@ -101,7 +99,7 @@ def register():
         gst_value = gst if (role == 'company' and gst) else None
 
         cursor.execute("""
-            INSERT INTO users (name, email, password_hash, role, phone, gst_number, is_verified, created_at) 
+            INSERT INTO users (name, email, password, role, phone, gst_number, is_verified, created_at) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING id
         """, (name, email, hashed, role, phone, gst_value, 1, created_at))
@@ -130,12 +128,10 @@ def login():
             return jsonify({'error': 'Email and password required'}), 400
 
         conn = get_db()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
-
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        cursor.execute("SELECT * FROM users WHERE email = %s AND password_hash = %s",
+        cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s",
                        (email, hash_password(password)))
         user = cursor.fetchone()
         conn.close()
@@ -164,10 +160,8 @@ def logout():
 @login_required
 def me():
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT id, name, email, role, phone, gst_number FROM users WHERE id = %s", (session['user_id'],))
     user = cursor.fetchone()
@@ -180,10 +174,8 @@ def me():
 @app.route('/api/loads', methods=['GET'])
 def get_loads():
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify([]), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("""
         SELECT l.*, u.name as company_name, u.gst_number,
@@ -214,10 +206,8 @@ def post_load():
             return jsonify({'error': f'{field} is required'}), 400
 
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -239,10 +229,8 @@ def post_load():
 @app.route('/api/loads/<int:load_id>', methods=['GET'])
 def get_load(load_id):
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("""
         SELECT l.*, u.name as company_name, u.phone as company_phone, u.gst_number
@@ -276,10 +264,8 @@ def place_bid(load_id):
         return jsonify({'error': 'Valid bid amount is required'}), 400
 
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("SELECT id FROM bids WHERE load_id = %s AND transporter_id = %s",
@@ -307,10 +293,8 @@ def place_bid(load_id):
 @app.route('/api/loads/<int:load_id>/bids', methods=['GET'])
 def get_bids_for_load(load_id):
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify([]), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("""
         SELECT b.*, u.name as transporter_name, u.phone as transporter_phone
@@ -332,10 +316,8 @@ def get_bids_for_load(load_id):
 @login_required
 def accept_bid(bid_id):
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("""
@@ -366,10 +348,8 @@ def accept_bid(bid_id):
 @login_required
 def dashboard():
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     user_id = session['user_id']
     role = session['role']
@@ -421,10 +401,8 @@ def verify_gst():
         return jsonify({'valid': False, 'message': 'Invalid GST number format'}), 400
 
     conn = get_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
     if not conn:
         return jsonify({'valid': False, 'message': 'Database error'}), 500
-
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT name, role FROM users WHERE gst_number = %s", (gst_number,))
     user = cursor.fetchone()
@@ -449,8 +427,8 @@ def verify_gst():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     print("=" * 50)
-    print("  🚛 CargoConnect Backend Server (PostgreSQL)")
-    print(f"  📍 Running at: http://0.0.0.0:{port}")
-    print("  📝 API Base: /api")
+    print("  CargoConnect Backend Server (PostgreSQL)")
+    print(f"  Running at: http://0.0.0.0:{port}")
+    print("  API Base: /api")
     print("=" * 50)
     app.run(host="0.0.0.0", port=port)
