@@ -43,6 +43,7 @@ def get_db():
         conn = psycopg2.connect(**db_config)
         return conn
     except Exception as err:
+        print(err)
         print(f"Database error: {err}")
         return None
     
