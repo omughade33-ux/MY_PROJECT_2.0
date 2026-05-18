@@ -34,12 +34,12 @@ print("Connected ✅")
 
 def get_db():
     try:
-        conn = mysql.connector.connect(**db_config)
+        conn = psycopg2.connect(**db_config)
         return conn
-    except mysql.connector.Error as err:
+    except Exception as err:
         print(f"Database error: {err}")
         return None
-
+    
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
