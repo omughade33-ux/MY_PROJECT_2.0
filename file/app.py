@@ -31,7 +31,13 @@ conn = psycopg2.connect(
 )
 
 print("Connected ✅")
-
+db_config = {
+    "host": "db.mukvklawjdmetyrchxgn.supabase.co",
+    "database": "postgres",
+    "user": "postgres",
+    "password": "om sai ram 1234",
+    "port": 5432
+}
 def get_db():
     try:
         conn = psycopg2.connect(**db_config)
