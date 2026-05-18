@@ -8,6 +8,9 @@ import os
 import psycopg2
 
 app = Flask(__name__)
+@app.route("/api")
+def api():
+    return {"message": "API working"}
 app.secret_key = "cargoconnect_secret_key_2026"
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
