@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify, session, send_from_directory
 from flask_cors import CORS
-import mysql.connector
 import hashlib
 import re
 from datetime import datetime
 from functools import wraps
 import os
+import psycopg2
 
 app = Flask(__name__)
 app.secret_key = "cargoconnect_secret_key_2026"
@@ -18,12 +18,12 @@ CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://1
 # MySQL Database Configuration
 # =====================================================
 
-db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'Om@1234',  # तुझा MySQL password असल्यास टाक
-    'database': 'cargoconnect'
-}
+
+conn = psycopg2.connect(
+    "इथे_supabase_connection_string_paste_कर"
+)
+
+print("Connected ✅")
 
 def get_db():
     try:
