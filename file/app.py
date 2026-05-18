@@ -26,16 +26,16 @@ db_config = {
     "database": os.environ.get("DB_NAME", "postgres"),
     "user": os.environ.get("DB_USER", "postgres"),
     "password": os.environ.get("DB_PASSWORD", "om sai ram 1234"),
-    "port": int(os.environ.get("DB_PORT", 5432))
+    "port": int(os.environ.get("DB_PORT", 5432)),
+    "sslmode": "require"
 }
-
 def get_db():
-    """Returns a database connection or None if error."""
     try:
         conn = psycopg2.connect(**db_config)
+        print("✅ Database connected successfully!")
         return conn
     except Exception as err:
-        print(f"Database connection error: {err}")
+        print(f"❌ Database error: {err}")
         return None
 
 def hash_password(password):
