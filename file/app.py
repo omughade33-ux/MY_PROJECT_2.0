@@ -6,6 +6,7 @@ from datetime import datetime
 from functools import wraps
 import os
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 @app.route("/api")
@@ -101,8 +102,7 @@ def register():
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
         
-        cursor = conn.cursor()
-        
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         # Check if email exists
         cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
@@ -147,7 +147,7 @@ def login():
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
         
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         cursor.execute("SELECT * FROM users WHERE email = %s AND password_hash = %s", 
                       (email, hash_password(password)))
         user = cursor.fetchone()
@@ -180,7 +180,7 @@ def me():
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
     
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor(conn.cursor(cursor_factory=RealDictCursor))
     cursor.execute("SELECT id, name, email, role, phone, gst_number FROM users WHERE id = %s", (session['user_id'],))
     user = cursor.fetchone()
     conn.close()
@@ -196,7 +196,8 @@ def get_loads():
     if not conn:
         return jsonify([]), 500
     
-    cursor = conn.cursor(dictionary=True)
+    
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("""SELECT l.*, u.name as company_name, u.gst_number,
                      (SELECT COUNT(*) FROM bids WHERE load_id = l.id) as bids_count
                      FROM loads l 
@@ -228,7 +229,7 @@ def post_load():
     if not conn:
         return jsonify({'error': 'Database connection failed'}), 500
     
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     cursor.execute("""INSERT INTO loads 
