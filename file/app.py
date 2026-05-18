@@ -94,15 +94,17 @@ def register():
             return jsonify({'error': 'Email already registered'}), 409
 
         hashed = hash_password(password)
-        created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        created_at = int(datetime.now().timestamp())
 
         gst_value = gst if (role == 'company' and gst) else None
+        cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 AS next_id FROM users")
+        user_id = cursor.fetchone()['next_id']
 
         cursor.execute("""
-            INSERT INTO users (name, email, password, role, phone, gst_number, is_verified, created_at) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO users (id, name, email, password, role, phone, gst_number, is_verified, created_at) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING id
-        """, (name, email, hashed, role, phone, gst_value, 1, created_at))
+        """, (user_id, name, email, hashed, role, phone, gst_value, 1, created_at))
         user_id = cursor.fetchone()['id']
         conn.commit()
         conn.close()
