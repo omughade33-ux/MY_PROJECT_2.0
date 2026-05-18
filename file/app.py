@@ -21,18 +21,23 @@ CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://1
 # =====================================================
 # PostgreSQL Database Configuration (Supabase)
 # =====================================================
+# You can also set DATABASE_URL to a full connection string.
+DATABASE_URL = os.environ.get("DATABASE_URL")
 db_config = {
     "host": os.environ.get("DB_HOST", "db.mukvklawjdmetyrchxgn.supabase.co"),
     "database": os.environ.get("DB_NAME", "postgres"),
     "user": os.environ.get("DB_USER", "postgres"),
     "password": os.environ.get("DB_PASSWORD", "mQParFRTrXgVg3Om"),
     "port": int(os.environ.get("DB_PORT", 5432)),
-    "sslmode": "require"
+    "sslmode": os.environ.get("DB_SSLMODE", "require")
 }
 
 def get_db():
     try:
-        conn = psycopg2.connect(**db_config)
+        if DATABASE_URL:
+            conn = psycopg2.connect(DATABASE_URL, sslmode=os.environ.get("DB_SSLMODE", "require"))
+        else:
+            conn = psycopg2.connect(**db_config)
         print("Database connected successfully!")
         return conn
     except Exception as err:
@@ -68,7 +73,9 @@ def serve_static(filename):
 @app.route('/api/register', methods=['POST'])
 def register():
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True)
+        if not data:
+            data = request.form.to_dict() if request.form else {}
         print("Register request:", data)
 
         name = data.get('name', '').strip()
