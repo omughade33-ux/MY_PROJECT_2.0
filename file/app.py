@@ -15,7 +15,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "cargoconnect_secret_key_2026")
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
-# CORS - allow all origins for development, can restrict later
+# CORS - allow all origins for production (you can restrict later)
 CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://127.0.0.1:5000', '*'])
 
 # =====================================================
@@ -25,10 +25,11 @@ db_config = {
     "host": os.environ.get("DB_HOST", "db.mukvklawjdmetyrchxgn.supabase.co"),
     "database": os.environ.get("DB_NAME", "postgres"),
     "user": os.environ.get("DB_USER", "postgres"),
-    "password": os.environ.get("DB_PASSWORD", "om sai ram 1234"),
+    "password": os.environ.get("DB_PASSWORD", "mQParFRTrXgVg3Om"),
     "port": int(os.environ.get("DB_PORT", 5432)),
     "sslmode": "require"
 }
+
 def get_db():
     try:
         conn = psycopg2.connect(**db_config)
@@ -54,7 +55,8 @@ def login_required(f):
 # =====================================================
 @app.route('/')
 def index():
-    return send_from_directory('.', 'demo.html')
+    # Serving index.html (not demo.html)
+    return send_from_directory('.', 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):

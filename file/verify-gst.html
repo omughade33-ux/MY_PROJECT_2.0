@@ -23,7 +23,7 @@ button:hover { background:#c94315; }
 </head>
 <body>
 <header>
-  <a href="demo.html">← Home</a>
+  <a href="index.html">← Home</a>
   <h1>GST Verification</h1>
 </header>
 <div class="container">
@@ -35,7 +35,7 @@ button:hover { background:#c94315; }
 </div>
 
 <script>
-const API = 'http://localhost:5000/api';
+const API = 'https://my-project-2-0.onrender.com/api';  // ✅ फिक्स केले
 
 async function verifyGST() {
   const gst = document.getElementById('gst-input').value.trim().toUpperCase();
@@ -76,7 +76,7 @@ async function verifyGST() {
     }
   } catch {
     resultEl.className = 'invalid';
-    resultEl.innerHTML = '❌ Could not connect to server. Is Flask running?';
+    resultEl.innerHTML = '❌ Could not connect to server. Is backend running?';
   }
 }
 
