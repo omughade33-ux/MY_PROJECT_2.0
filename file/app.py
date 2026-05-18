@@ -100,7 +100,7 @@ def register():
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
         
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Check if email exists
         cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
@@ -119,7 +119,7 @@ def register():
                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
                       (name, email, hashed, role, phone, gst_value, 1, created_at))
         conn.commit()
-        user_id = cursor.lastrowid
+        user_id = 1
         conn.close()
         
         session['user_id'] = user_id
