@@ -20,7 +20,9 @@ CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://1
 
 
 conn = psycopg2.connect(
-    "postgresql://postgres:[YOUR-PASSWORD]@db.mukvklawjdmetyrchxgn.supabase.co:5432/postgres"
+    
+    "postgresql://postgres:password@aws-0-ap-south-1.pooler.supabase.com:6543/postgres"
+
 )
 
 print("Connected ✅")
