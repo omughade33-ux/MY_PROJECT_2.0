@@ -65,7 +65,7 @@ def serve_static(filename):
 @app.route('/api/register', methods=['POST'])
 def register():
     try:
-        print("REGISTER API CALLED")
+        print("STEP 1")
         data = request.get_json(silent=True)
         if not data:
             data = request.form.to_dict() if request.form else {}
@@ -85,9 +85,11 @@ def register():
             return jsonify({'error': 'Invalid role'}), 400
 
         conn = get_db()
+        print("STEP 2")
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
         cursor = conn.cursor(cursor_factory=RealDictCursor)
+        print("STEP 3")
         cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
         if cursor.fetchone():
             conn.close()
@@ -107,6 +109,7 @@ def register():
         """, (user_id, name, email, hashed, role, phone, gst_value, 1, created_at))
         user_id = cursor.fetchone()['id']
         conn.commit()
+        print("STEP 4")
         conn.close()
 
         session['user_id'] = user_id
@@ -117,9 +120,9 @@ def register():
 
     except Exception as e:
         import traceback
-    traceback.print_exc()
-    print("Register error:", str(e))
-    return jsonify({'error': str(e)}), 500
+        traceback.print_exc()
+        print("Register error:", str(e))
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -155,9 +158,9 @@ def login():
     
     except Exception as e:
         import traceback
-    traceback.print_exc()
-    print("Register error:", str(e))
-    return jsonify({'error': str(e)}), 500
+        traceback.print_exc()
+        print("Login error:", str(e))
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
