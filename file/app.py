@@ -7,7 +7,7 @@ from functools     import wraps
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import traceback
+
 
 app = Flask(__name__)
 
@@ -115,8 +115,10 @@ def register():
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
 
     except Exception as e:
-        traceback.print_exc()
-        return jsonify({'error': str(e)}), 500
+        import traceback
+    traceback.print_exc()
+    print("Register error:", str(e))
+    return jsonify({'error': str(e)}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -151,8 +153,10 @@ def login():
     
     
     except Exception as e:
-        traceback.print_exc()
-        return jsonify({'error': str(e)}), 500
+        import traceback
+    traceback.print_exc()
+    print("Register error:", str(e))
+    return jsonify({'error': str(e)}), 500
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
