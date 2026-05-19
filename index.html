@@ -7,80 +7,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body { font-family: 'DM Sans', sans-serif; background: #F8F9FB; color: #0F1B2D; }
-
 nav { background: white; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 64px; flex-wrap: wrap; gap: 10px; }
-
 .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .logo-icon { width: 38px; height: 38px; background: #E8501A; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
 .logo-text { font-size: 1.3rem; font-weight: 800; font-family: 'Syne', sans-serif; }
 .logo-text span { color: #E8501A; }
-
 .nav-links { display: flex; gap: 2rem; flex-wrap: wrap; }
 .nav-links a { text-decoration: none; color: #3A4D63; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
 .nav-links a:hover { color: #E8501A; }
-
 .btn { padding: 8px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
 .btn-outline { background: transparent; border: 1.5px solid #E2E8F0; color: #3A4D63; }
 .btn-outline:hover { border-color: #E8501A; color: #E8501A; }
 .btn-primary { background: #E8501A; color: white; }
 .btn-primary:hover { background: #c94315; }
-
 .user-info { display: flex; align-items: center; gap: 1rem; }
 .user-name { font-weight: 600; }
 .role-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; background: #FFF3EE; color: #E8501A; }
-
 .hero { background: linear-gradient(135deg, #0F1B2D 0%, #1A2E46 100%); padding: 80px 2rem 60px; text-align: center; }
 .hero h1 { font-size: 3rem; color: white; margin-bottom: 1rem; }
 .hero h1 span { color: #F97316; }
 .hero p { font-size: 1.1rem; color: #94A3B8; max-width: 560px; margin: 0 auto 2rem; }
-
 .stats-bar { background: white; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: center; flex-wrap: wrap; }
 .stat-item { text-align: center; padding: 1.5rem 3rem; border-right: 1px solid #E2E8F0; }
 .stat-item:last-child { border-right: none; }
 .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: #E8501A; }
 .stat-label { font-size: 0.8rem; color: #6B7A8D; }
-
 main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-
 .view-tabs { display: flex; border-bottom: 2px solid #E2E8F0; margin-bottom: 2rem; flex-wrap: wrap; }
 .view-tab { padding: 10px 22px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; background: none; color: #6B7A8D; border-bottom: 2px solid transparent; margin-bottom: -2px; }
 .view-tab.active { color: #E8501A; border-bottom-color: #E8501A; }
-
 .loads-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
-
 .load-card { background: white; border: 1px solid #E2E8F0; border-radius: 18px; padding: 1.25rem; transition: all 0.25s; cursor: pointer; }
 .load-card:hover { border-color: #E8501A; transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232, 80, 26, 0.1); }
-
 .card-header { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px; }
 .company-name { font-weight: 700; font-size: 1rem; }
 .gst-badge { font-size: 0.7rem; color: #16A34A; background: #DCFCE7; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
 .truck-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; background: #FFF3EE; color: #E8501A; }
-
 .route-row { display: flex; align-items: center; gap: 8px; margin: 0.75rem 0; }
 .route-city { font-weight: 700; font-size: 0.9rem; }
 .route-line { flex: 1; border-top: 2px dashed #E2E8F0; }
-
 .card-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.75rem 0; }
 .meta-item label { font-size: 0.7rem; color: #6B7A8D; font-weight: 600; }
 .meta-item span { font-size: 0.85rem; font-weight: 600; }
-
 .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; }
 .price { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: #E8501A; }
 .btn-bid { padding: 8px 18px; background: #E8501A; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-
 .status { padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
 .status-open { background: #DCFCE7; color: #15803D; }
 .status-booked { background: #FEF3C7; color: #92400E; }
-
 .post-form { background: white; border: 1px solid #E2E8F0; border-radius: 18px; padding: 2rem; }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field label { font-size: 0.75rem; font-weight: 700; color: #3A4D63; text-transform: uppercase; }
 .form-field input, .form-field select { padding: 10px 14px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-family: inherit; font-size: 0.9rem; outline: none; }
 .form-field input:focus, .form-field select:focus { border-color: #E8501A; }
-
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 27, 45, 0.6); z-index: 200; align-items: center; justify-content: center; }
 .modal-overlay.open { display: flex; }
 .modal { background: white; border-radius: 18px; width: 450px; max-width: 95vw; padding: 2rem; position: relative; }
@@ -89,16 +70,13 @@ main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 .modal-field { margin-bottom: 1rem; }
 .modal-field label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 5px; color: #3A4D63; }
 .modal-field input { width: 100%; padding: 10px 14px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 0.9rem; }
-
 .role-selector { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
 .role-btn { flex: 1; padding: 10px; border: 2px solid #E2E8F0; border-radius: 8px; background: none; cursor: pointer; font-weight: 600; }
 .role-btn.selected { border-color: #E8501A; background: #FFF3EE; color: #E8501A; }
-
 .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #0F1B2D; color: white; padding: 12px 24px; border-radius: 30px; font-size: 0.85rem; font-weight: 600; z-index: 999; display: none; }
 .toast.show { display: block; }
 .toast.success { background: #16A34A; }
 .toast.error { background: #DC2626; }
-
 .hidden { display: none; }
 .empty-state { text-align: center; padding: 3rem; color: #6B7A8D; }
 footer { background: #0F1B2D; color: #94A3B8; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 2rem; }
@@ -350,7 +328,7 @@ async function login() {
         showToast(`Welcome ${currentUser.name}!`, 'success');
     } catch (err) {
         console.log('Error:', err);
-        showToast('Cannot connect to server. Make sure Flask is running on port 5000', 'error');
+        showToast('Cannot connect to server. Make sure backend is running', 'error');
     }
 }
 
@@ -458,7 +436,7 @@ async function loadLoads() {
         `).join('');
     } catch (err) {
         console.log('Error loading loads:', err);
-        grid.innerHTML = '<div class="empty-state">❌ Cannot connect to server. Make sure Flask is running on port 5000</div>';
+        grid.innerHTML = '<div class="empty-state">❌ Cannot connect to server. Make sure backend is running.</div>';
     }
 }
 
