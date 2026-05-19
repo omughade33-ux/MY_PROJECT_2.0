@@ -3,7 +3,7 @@ from flask_cors import CORS
 import hashlib
 import re
 from datetime import datetime
-from functools import wraps
+from functools     import wraps
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
