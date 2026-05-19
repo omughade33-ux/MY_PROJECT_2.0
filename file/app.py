@@ -22,28 +22,19 @@ CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://1
 # =====================================================
 # PostgreSQL Database Configuration (Supabase)
 # =====================================================
-# You can also set DATABASE_URL to a full connection string.
+# You can also set DATABASE_URL to a full connection stri
 DATABASE_URL = os.environ.get("DATABASE_URL")
-db_config = {
-    "host": os.environ.get("DB_HOST", "db.mukvklawjdmetyrchxgn.supabase.co"),
-    "database": os.environ.get("DB_NAME", "postgres"),
-    "user": os.environ.get("DB_USER", "postgres"),
-    "password": os.environ.get("DB_PASSWORD", "mQParFRTrXgVg3Om"),
-    "port": int(os.environ.get("DB_PORT", 5432)),
-    "sslmode": os.environ.get("DB_SSLMODE", "require")
-}
 
 def get_db():
     try:
-        if DATABASE_URL:
-            conn = psycopg2.connect(DATABASE_URL, sslmode=os.environ.get("DB_SSLMODE", "require"))
-        else:
-            conn = psycopg2.connect(**db_config)
+        conn = psycopg2.connect(DATABASE_URL)
         print("Database connected successfully!")
         return conn
     except Exception as err:
         print(f"Database error: {err}")
         return None
+
+
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
