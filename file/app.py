@@ -65,6 +65,7 @@ def serve_static(filename):
 @app.route('/api/register', methods=['POST'])
 def register():
     try:
+        print("REGISTER API CALLED")
         data = request.get_json(silent=True)
         if not data:
             data = request.form.to_dict() if request.form else {}
