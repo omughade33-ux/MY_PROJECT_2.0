@@ -123,6 +123,7 @@ def register():
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
 
     except Exception as e:
+        print(e)
         print("Register error:", str(e))
         return jsonify({'error': str(e)}), 500
 
@@ -157,6 +158,7 @@ def login():
             'email': user['email'], 'phone': user['phone'], 'gst': user['gst_number']
         }})
     except Exception as e:
+        print(e)
         print("Login error:", str(e))
         return jsonify({'error': str(e)}), 500
 
