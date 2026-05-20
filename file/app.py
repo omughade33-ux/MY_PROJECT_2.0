@@ -21,13 +21,7 @@ app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # CORS - allow all origins for production (you can restrict later)
-CORS(
-    app,
-    supports_credentials=True,
-    origins=[
-        "https://my-project-2-0.onrender.com"
-    ]
-)
+CORS(app, supports_credentials=True)
 
 # =====================================================
 # PostgreSQL Database Configuration (Supabase)
