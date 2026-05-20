@@ -11,10 +11,10 @@ from psycopg2.extras import RealDictCursor
 
 
 app = Flask(__name__)
-
 app.secret_key = "cargo_secret_key_2026"
 
-app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 CORS(app, supports_credentials=True)
