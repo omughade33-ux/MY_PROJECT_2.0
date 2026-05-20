@@ -14,7 +14,6 @@ from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
-Session(app)
 
 # Session Configuration
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
@@ -23,7 +22,9 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_NAME'] = 'cargoconnect_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = 7 * 24 * 60 * 60  # 7 days
 app.config['SESSION_REFRESH_EACH_REQUEST'] = True  # Refresh session on each request
-app.config['SESSION_TYPE'] = 'filesystem'  
+app.config['SESSION_TYPE'] = 'filesystem'
+
+Session(app)
 
 CORS(app, supports_credentials=True)
 # =====================================================
