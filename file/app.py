@@ -22,7 +22,7 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_NAME'] = 'cargoconnect_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = 7 * 24 * 60 * 60  # 7 days
 app.config['SESSION_REFRESH_EACH_REQUEST'] = True  # Refresh session on each request
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_TYPE'] = 'filesystem'  
 
 CORS(app, supports_credentials=True)
 # =====================================================
