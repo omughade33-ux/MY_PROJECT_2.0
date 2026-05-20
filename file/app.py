@@ -116,11 +116,10 @@ def register():
         session['name'] = name
 
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
-
     except Exception as e:
         import traceback
         traceback.print_exc()
-        print("Register error:", str(e))
+        print("Register error:", e)
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/login', methods=['POST'])
