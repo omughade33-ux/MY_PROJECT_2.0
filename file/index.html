@@ -322,10 +322,15 @@ async function login() {
             return;
         }
         
+        // Clear form fields
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        
         currentUser = data.user;
         updateUI();
         closeModal();
         showToast(`Welcome ${currentUser.name}!`, 'success');
+        loadLoads();
     } catch (err) {
         console.log('Error:', err);
         showToast('Cannot connect to server. Make sure backend is running', 'error');
@@ -372,10 +377,18 @@ async function register() {
             return;
         }
         
+        // Clear form fields
+        document.getElementById('regName').value = '';
+        document.getElementById('regEmail').value = '';
+        document.getElementById('regPhone').value = '';
+        document.getElementById('regPassword').value = '';
+        document.getElementById('regGst').value = '';
+        
         currentUser = data.user;
         updateUI();
         closeModal();
         showToast('Account created successfully!', 'success');
+        loadLoads();
     } catch (err) {
         showToast('Cannot connect to server', 'error');
     }
@@ -468,13 +481,21 @@ async function placeBid(loadId) {
         const data = await res.json();
         
         if (!res.ok) {
+            if (res.status === 401) {
+                showToast('Session expired. Please login again', 'error');
+                currentUser = null;
+                updateUI();
+                openModal('login');
+                return;
+            }
             showToast(data.error || 'Bid failed', 'error');
             return;
         }
         
-        showToast('✅ Bid placed!', 'success');
-        loadLoads();
+        showToast('✅ Bid placed successfully!', 'success');
+        await loadLoads();
     } catch (err) {
+        console.log('Bid error:', err);
         showToast('Server error', 'error');
     }
 }
@@ -516,11 +537,18 @@ async function postLoad() {
         const data = await res.json();
         
         if (!res.ok) {
+            if (res.status === 401) {
+                showToast('Session expired. Please login again', 'error');
+                currentUser = null;
+                updateUI();
+                openModal('login');
+                return;
+            }
             showToast(data.error || 'Failed', 'error');
             return;
         }
         
-        showToast('Load posted!', 'success');
+        showToast('✅ Load posted successfully!', 'success');
         document.getElementById('goodsName').value = '';
         document.getElementById('weight').value = '';
         document.getElementById('pickupLocation').value = '';
@@ -530,8 +558,9 @@ async function postLoad() {
         document.getElementById('price').value = '';
         
         switchTab('browse');
-        loadLoads();
+        await loadLoads();
     } catch (err) {
+        console.log('Post load error:', err);
         showToast('Server error', 'error');
     }
 }
@@ -547,6 +576,19 @@ async function loadDashboard() {
     
     try {
         const res = await fetch(`${API}/dashboard`, { credentials: 'include' });
+        
+        if (!res.ok) {
+            if (res.status === 401) {
+                showToast('Session expired. Please login again', 'error');
+                currentUser = null;
+                updateUI();
+                openModal('login');
+                return;
+            }
+            grid.innerHTML = '<div class="empty-state">Error loading dashboard</div>';
+            return;
+        }
+        
         const data = await res.json();
         
         if (data.role === 'company') {
@@ -590,12 +632,13 @@ async function loadDashboard() {
                     <div class="route-row"><span>📍 ${bid.pickup_location} → ${bid.delivery_location}</span></div>
                     <div class="card-meta">
                         <div><label>Weight</label><span>${bid.weight}</span></div>
-                        <div><label>Your Bid</label><span class="price">₹${Number(bid.bid_amount).toLocaleString('en-IN')}</span></div>
+                        <div><label>Your Bid</label><span class="price">₹${bid.bid_amount ? Number(bid.bid_amount).toLocaleString('en-IN') : '0'}</span></div>
                     </div>
                 </div>
             `).join('');
         }
     } catch (err) {
+        console.log('Dashboard error:', err);
         grid.innerHTML = '<div class="empty-state">Error loading dashboard</div>';
     }
 }
@@ -604,7 +647,31 @@ document.getElementById('modal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('modal')) closeModal();
 });
 
-loadLoads();
+// Check if user is already logged in on page load
+async function checkSession() {
+    try {
+        const res = await fetch(`${API}/check-session`, { credentials: 'include' });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.authenticated) {
+                // Fetch user details
+                const userRes = await fetch(`${API}/me`, { credentials: 'include' });
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    currentUser = userData.user;
+                    updateUI();
+                    return;
+                }
+            }
+        }
+    } catch (err) {
+        console.log('Session check error:', err);
+    }
+    updateUI();
+    loadLoads();
+}
+
+checkSession();
 </script>
 </body>
 </html>

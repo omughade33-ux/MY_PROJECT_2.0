@@ -13,9 +13,10 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
 
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True only in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = 7 * 24 * 60 * 60  # 7 days
 
 CORS(app, supports_credentials=True)
 # =====================================================
@@ -116,9 +117,11 @@ def register():
         print("STEP 4")
         conn.close()
 
+        session.permanent = True
         session['user_id'] = user_id
         session['role'] = role
         session['name'] = name
+        session['email'] = email
 
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
     except Exception as e:
@@ -152,6 +155,7 @@ def login():
         session['user_id'] = user['id']
         session['role'] = user['role']
         session['name'] = user['name']
+        session['email'] = user['email']
         session.modified = True
 
         return jsonify({'success': True, 'user': {
@@ -165,6 +169,12 @@ def login():
         traceback.print_exc()
         print("Login error:", str(e))
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/check-session', methods=['GET'])
+def check_session():
+    if 'user_id' in session:
+        return jsonify({'authenticated': True, 'user_id': session.get('user_id')})
+    return jsonify({'authenticated': False}), 401
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
