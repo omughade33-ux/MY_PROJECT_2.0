@@ -11,19 +11,13 @@ from psycopg2.extras import RealDictCursor
 
 
 app = Flask(__name__)
+
 app.secret_key = "cargo_secret_key_2026"
 
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 
-from datetime import timedelta
-
-app.permanent_session_lifetime = timedelta(days=7)
-
-
-# CORS - allow all origins for production (you can restrict later)
 CORS(app, supports_credentials=True)
-
 # =====================================================
 # PostgreSQL Database Configuration (Supabase)
 # =====================================================
@@ -158,7 +152,7 @@ def login():
         session['user_id'] = user['id']
         session['role'] = user['role']
         session['name'] = user['name']
-        print("LOGIN SESSION:", session)
+        session.modified = True
 
         return jsonify({'success': True, 'user': {
             'id': user['id'], 'name': user['name'], 'role': user['role'],
