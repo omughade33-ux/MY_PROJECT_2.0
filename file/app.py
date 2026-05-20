@@ -157,6 +157,7 @@ def login():
         session['user_id'] = user['id']
         session['role'] = user['role']
         session['name'] = user['name']
+        print("LOGIN SESSION:", session)
 
         return jsonify({'success': True, 'user': {
             'id': user['id'], 'name': user['name'], 'role': user['role'],
