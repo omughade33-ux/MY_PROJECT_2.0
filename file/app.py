@@ -10,6 +10,9 @@ from psycopg2.extras import RealDictCursor
 
 
 app = Flask(__name__)
+from datetime import timedelta
+
+app.permanent_session_lifetime = timedelta(days=7)
 
 # Secret key from environment (better security)
 app.secret_key = os.environ.get("SECRET_KEY", "cargoconnect_secret_key_2026")
@@ -147,7 +150,8 @@ def login():
 
         if not user:
             return jsonify({'error': 'Invalid email or password'}), 401
-
+            
+        session.permanent = True
         session['user_id'] = user['id']
         session['role'] = user['role']
         session['name'] = user['name']
