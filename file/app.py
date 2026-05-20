@@ -99,15 +99,14 @@ def register():
         created_at = int(datetime.now().timestamp())
 
         gst_value = gst if (role == 'company' and gst) else None
-        cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 AS next_id FROM users")
-        user_id = cursor.fetchone()['next_id']
-
         cursor.execute("""
-            INSERT INTO users (id, name, email, password, role, phone, gst_number, is_verified, created_at) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO users (name, email, password, role, phone, gst_number, is_verified, created_at) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING id
-        """, (user_id, name, email, hashed, role, phone, gst_value, 1, created_at))
-        user_id = cursor.fetchone()['id']
+        """, (name, email, hashed, role, phone, gst_value, 1, created_at))
+        
+        result = cursor.fetchone()
+        user_id = result['id']
         conn.commit()
         print("STEP 4")
         conn.close()
