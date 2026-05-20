@@ -24,6 +24,7 @@ CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://1
 # =====================================================
 # You can also set DATABASE_URL to a full connection stri
 DATABASE_URL = os.environ.get("DATABASE_URL")
+print(DATABASE_URL)
 
 def get_db():
     try:
