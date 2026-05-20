@@ -13,18 +13,13 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
 
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = False
 
 from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(days=7)
 
-# Secret key from environment (better security)
-app.secret_key = os.environ.get("SECRET_KEY", "cargoconnect_secret_key_2026")
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = True
-app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # CORS - allow all origins for production (you can restrict later)
 CORS(app, supports_credentials=True)
