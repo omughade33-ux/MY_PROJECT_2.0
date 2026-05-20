@@ -16,13 +16,18 @@ app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
 
 # Session Configuration
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True only in production with HTTPS
+is_dev = os.environ.get('FLASK_ENV', '').lower() == 'development'
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax' if is_dev else 'None'
+app.config['SESSION_COOKIE_SECURE'] = False if is_dev else True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_NAME'] = 'cargoconnect_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = 7 * 24 * 60 * 60  # 7 days
 app.config['SESSION_REFRESH_EACH_REQUEST'] = True  # Refresh session on each request
 app.config['SESSION_TYPE'] = 'filesystem'
+
+session_dir = os.path.join(os.getcwd(), 'flask_session')
+os.makedirs(session_dir, exist_ok=True)
+app.config['SESSION_FILE_DIR'] = session_dir
 
 Session(app)
 
