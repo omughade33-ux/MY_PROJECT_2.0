@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_session import Session
 from flask import session
 from flask_cors import CORS
 import hashlib
@@ -8,7 +9,7 @@ from functools     import wraps
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from flask_session import Session
+
 
 
 app = Flask(__name__)
