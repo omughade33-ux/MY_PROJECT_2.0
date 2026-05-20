@@ -650,11 +650,17 @@ document.getElementById('modal').addEventListener('click', (e) => {
 // Check if user is already logged in on page load
 async function checkSession() {
     try {
-        const res = await fetch(`${API}/check-session`, { credentials: 'include' });
+        const res = await fetch(`${API}/check-session`, { 
+            credentials: 'include',
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        });
+        
         if (res.ok) {
             const data = await res.json();
             if (data.authenticated && data.user) {
                 currentUser = data.user;
+                console.log('✅ Session restored:', currentUser.name);
                 updateUI();
                 if (currentUser.role === 'company') {
                     loadDashboard();

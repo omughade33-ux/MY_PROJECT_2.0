@@ -13,10 +13,13 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
 
+# Session Configuration
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False  # Set to True only in production with HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_NAME'] = 'cargoconnect_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = 7 * 24 * 60 * 60  # 7 days
+app.config['SESSION_REFRESH_EACH_REQUEST'] = True  # Refresh session on each request
 
 CORS(app, supports_credentials=True)
 # =====================================================
@@ -122,6 +125,7 @@ def register():
         session['role'] = role
         session['name'] = name
         session['email'] = email
+        session.modified = True
 
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
     except Exception as e:
@@ -138,7 +142,7 @@ def login():
 
         if not email or not password:
             return jsonify({'error': 'Email and password required'}), 400
-
+ 
         conn = get_db()
         if not conn:
             return jsonify({'error': 'Database connection failed'}), 500
@@ -156,6 +160,8 @@ def login():
         session['role'] = user['role']
         session['name'] = user['name']
         session['email'] = user['email']
+        session['phone'] = user['phone']
+        session['gst'] = user['gst_number']
         session.modified = True
 
         return jsonify({'success': True, 'user': {
