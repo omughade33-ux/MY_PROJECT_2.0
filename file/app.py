@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, session, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory
+from flask import session
 from flask_cors import CORS
 import hashlib
 import re
@@ -10,6 +11,7 @@ from psycopg2.extras import RealDictCursor
 
 
 app = Flask(__name__)
+app.secret_key = "cargo_secret_key_2026"
 from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(days=7)
