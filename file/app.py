@@ -118,7 +118,7 @@ def register():
         return jsonify({'success': True, 'user': {'id': user_id, 'name': name, 'role': role}}), 201
     except Exception as e:
          return jsonify({
-        "error": str(e)
+        "error": repr(e)
         }), 500
 
 @app.route('/api/login', methods=['POST'])
