@@ -12,6 +12,10 @@ from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 app.secret_key = "cargo_secret_key_2026"
+
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+
 from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(days=7)
