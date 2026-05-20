@@ -21,7 +21,13 @@ app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # CORS - allow all origins for production (you can restrict later)
-CORS(app, supports_credentials=True, origins=['http://localhost:5000', 'http://127.0.0.1:5000', '*'])
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[
+        "https://my-project-2-0.onrender.com"
+    ]
+)
 
 # =====================================================
 # PostgreSQL Database Configuration (Supabase)
@@ -219,8 +225,8 @@ def post_load():
     data = request.get_json()
     required = ['goods_name', 'weight', 'pickup_location', 'delivery_location', 'truck_type', 'pickup_date']
     for field in required:
-        if not data.get(field):
-            return jsonify({'error': f'{field} is required'}), 400
+            if not data.get(field):
+                return jsonify({'error': f'{field} is required'}), 400
 
     conn = get_db()
     if not conn:
