@@ -653,20 +653,21 @@ async function checkSession() {
         const res = await fetch(`${API}/check-session`, { credentials: 'include' });
         if (res.ok) {
             const data = await res.json();
-            if (data.authenticated) {
-                // Fetch user details
-                const userRes = await fetch(`${API}/me`, { credentials: 'include' });
-                if (userRes.ok) {
-                    const userData = await userRes.json();
-                    currentUser = userData.user;
-                    updateUI();
-                    return;
+            if (data.authenticated && data.user) {
+                currentUser = data.user;
+                updateUI();
+                if (currentUser.role === 'company') {
+                    loadDashboard();
+                } else {
+                    loadLoads();
                 }
+                return;
             }
         }
     } catch (err) {
         console.log('Session check error:', err);
     }
+    // No active session - show login screen
     updateUI();
     loadLoads();
 }

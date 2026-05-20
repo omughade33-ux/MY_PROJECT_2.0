@@ -173,7 +173,20 @@ def login():
 @app.route('/api/check-session', methods=['GET'])
 def check_session():
     if 'user_id' in session:
-        return jsonify({'authenticated': True, 'user_id': session.get('user_id')})
+        conn = get_db()
+        if conn:
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
+            cursor.execute("SELECT id, name, email, role, phone, gst_number FROM users WHERE id = %s", (session['user_id'],))
+            user = cursor.fetchone()
+            conn.close()
+            if user:
+                return jsonify({
+                    'authenticated': True, 
+                    'user': dict(user) if user else None
+                })
+        # Session exists but user not found in DB
+        session.clear()
+        return jsonify({'authenticated': False}), 401
     return jsonify({'authenticated': False}), 401
 
 @app.route('/api/logout', methods=['POST'])
