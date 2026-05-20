@@ -28,7 +28,10 @@ print(DATABASE_URL)
 
 def get_db():
     try:
-        conn = psycopg2.connect(DATABASE_URL)
+        conn = psycopg2.connect(
+            DATABASE_URL,
+            sslmode="require"
+            )
         print("Database connected successfully!")
         return conn
     except Exception as err:
